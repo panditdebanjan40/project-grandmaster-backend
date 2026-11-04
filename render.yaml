@@ -1,0 +1,24 @@
+# Render Blueprint. Render Dashboard -> New -> Blueprint -> pick this repo.
+# Free plan sleeps after ~15 min idle (first request then takes 30-60 s). Change plan to "starter" to avoid that.
+services:
+  - type: web
+    name: grandmaster-backend
+    runtime: node
+    plan: free
+    # A package-lock.json is present; use `npm ci --omit=dev` here for reproducible builds.
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: STT_PROVIDER
+        value: assemblyai
+      - key: MAX_AUDIO_SECONDS
+        value: "600"
+      - key: ASSEMBLYAI_API_KEY
+        sync: false          # set in the dashboard, never in git
+      - key: ACCESS_TOKENS
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false          # e.g. https://your-site.netlify.app

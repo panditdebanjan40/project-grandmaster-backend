@@ -1,0 +1,12 @@
+# Replit configuration (written from documentation; NOT verified on Replit by the author).
+# If Replit ignores or rewrites this file, just use the Run button / Shell commands in README.md.
+entrypoint = "src/server.js"
+modules = ["nodejs-20"]
+run = "npm start"
+
+[nix]
+channel = "stable-24_05"
+
+[[ports]]
+localPort = 3000
+externalPort = 80

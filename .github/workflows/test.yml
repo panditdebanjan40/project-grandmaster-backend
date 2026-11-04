@@ -1,0 +1,32 @@
+# Runs the FULL test suite on GitHub's servers (which can reach the npm registry) and publishes
+# the generated package-lock.json + the complete test output as downloadable artifacts.
+# Trigger: push this folder as the root of a GitHub repo, or Actions tab -> "test" -> Run workflow.
+# NOTE: written from documentation; not yet run by the author.
+name: test
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies (creates package-lock.json when it is missing)
+        run: npm install
+      - name: Show resolved versions
+        run: npm ls --depth=0
+      - name: Full test suite (offline + parser + API)
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee test-output.txt
+      - name: Publish results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results
+          path: |
+            package-lock.json
+            test-output.txt

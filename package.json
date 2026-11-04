@@ -1,0 +1,31 @@
+{
+  "name": "grandmaster-backend",
+  "version": "0.1.0",
+  "description": "Audio-to-chess backend for Project Grandmaster: speech-to-text with word timestamps, spoken chess move parsing, job API.",
+  "private": true,
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test",
+    "test:offline": "node --test test/tokenize.test.js test/spec.test.js test/config.test.js test/auth.test.js test/validate.test.js test/logger.test.js test/stt.test.js test/audio.test.js test/jobs.test.js test/pipeline.test.js",
+    "parse": "node scripts/parse-text.js",
+    "smoke": "node scripts/smoke.js",
+    "test:parser": "node --test test/parser.test.js",
+    "test:api": "node --test test/api.test.js"
+  },
+  "dependencies": {
+    "chess.js": "0.10.3",
+    "cors": "2.8.5",
+    "dotenv": "16.4.7",
+    "express": "4.21.2",
+    "express-rate-limit": "7.5.0",
+    "helmet": "8.0.0",
+    "multer": "2.0.2"
+  },
+  "optionalDependencies": {
+    "ffmpeg-static": "5.2.0"
+  }
+}
